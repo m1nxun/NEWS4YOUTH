@@ -1,0 +1,82 @@
+.edit-wrapper {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.edit-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.user-section2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+.user-section2 label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #444;
+}
+
+.user-section2 input,
+.user-section2 textarea {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 6px;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+
+.user-section2 input:focus,
+.user-section2 textarea:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.user-section2 textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.join-date {
+  font-size: 14px;
+  color: #777;
+}
+
+.edit-btn {
+  padding: 12px 20px;
+  background-color: #0070f3;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+  background-color: #0059c1;
+}
+
+.email {
+  font-size: 14px;
+  color: #666;
+}

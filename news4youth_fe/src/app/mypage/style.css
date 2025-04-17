@@ -1,0 +1,76 @@
+.mypage-wrapper {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  font-family: "Segoe UI", sans-serif;
+  color: #111827;
+}
+
+.mypage-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.user-section h2 {
+  font-size: 1.5rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.email,
+.join-date,
+.bio {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.bio {
+  font-style: italic;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.actions .edit-btn,
+.actions .logout-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  border: none;
+}
+
+.actions .edit-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.actions .edit-btn:hover {
+  background-color: #2563eb;
+}
+
+.actions .logout-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.actions .logout-btn:hover {
+  background-color: #dc2626;
+}
+
+.user-section {
+  text-decoration: none;
+}
