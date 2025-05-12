@@ -1,3 +1,7 @@
+// components/TipTapEditor.tsx
+"use client";
+
+import React from "react";
 import "./editor.css";
 
 import { Color } from "@tiptap/extension-color";
@@ -6,11 +10,24 @@ import TextStyle from "@tiptap/extension-text-style";
 import Image from "@tiptap/extension-image";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React from "react";
+
+interface Props {
+  content: string;
+  onChange: (html: string) => void;
+}
+
+const extensions = [
+  Color.configure({ types: [TextStyle.name, ListItem.name] }),
+  TextStyle,
+  Image.configure({ inline: false, allowBase64: true }),
+  StarterKit.configure({
+    bulletList: { keepMarks: true },
+    orderedList: { keepMarks: true },
+  }),
+];
 
 const MenuBar: React.FC = () => {
   const { editor } = useCurrentEditor();
-
   if (!editor) return null;
 
   const addImage = () => {
@@ -19,6 +36,8 @@ const MenuBar: React.FC = () => {
       editor.chain().focus().setImage({ src: url }).run();
     }
   };
+
+  const headingLevels = [1, 2, 3, 4, 5, 6];
 
   return (
     <div className="menu-bar">
@@ -59,7 +78,8 @@ const MenuBar: React.FC = () => {
         >
           단락
         </button>
-        {[1, 2, 3, 4, 5, 6].map((level) => (
+
+        {headingLevels.map((level) => (
           <button
             key={level}
             onClick={() =>
@@ -74,6 +94,7 @@ const MenuBar: React.FC = () => {
             H{level}
           </button>
         ))}
+
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is-active" : ""}
@@ -106,18 +127,20 @@ const MenuBar: React.FC = () => {
         <button onClick={() => editor.chain().focus().setHardBreak().run()}>
           줄바꿈
         </button>
+
         <button
           onClick={() => editor.chain().focus().undo().run()}
-          disabled={!editor.can().chain().focus().undo().run()}
+          disabled={!editor.can().undo()}
         >
           Undo
         </button>
         <button
           onClick={() => editor.chain().focus().redo().run()}
-          disabled={!editor.can().chain().focus().redo().run()}
+          disabled={!editor.can().redo()}
         >
           Redo
         </button>
+
         <button
           onClick={() => editor.chain().focus().setColor("#958DF1").run()}
           className={
@@ -128,39 +151,23 @@ const MenuBar: React.FC = () => {
         >
           보라색
         </button>
-        <button onClick={addImage}>Image</button>
+
+        <button onClick={addImage}>이미지</button>
       </div>
     </div>
   );
 };
 
-const extensions = [
-  Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({}),
-  Image.configure({ inline: false, allowBase64: true }),
-  StarterKit.configure({
-    bulletList: { keepMarks: true, keepAttributes: false },
-    orderedList: { keepMarks: true, keepAttributes: false },
-  }),
-];
-
-const content = `<h2>기사 작성하기</h2>
-<p>기사 내용을 작성하세요.</p>
-`;
-interface Props {
-  content: string;
-  onChange: (html: string) => void;
-}
 const TipTapEditorWithToolbar: React.FC<Props> = ({ content, onChange }) => {
   return (
     <EditorProvider
-      slotBefore={<MenuBar />}
       extensions={extensions}
       content={content}
+      immediatelyRender={false}
       onUpdate={({ editor }) => {
         onChange(editor.getHTML());
       }}
-      immediatelyRender={false}
+      slotBefore={<MenuBar />} // ✨ 이게 핵심
     />
   );
 };

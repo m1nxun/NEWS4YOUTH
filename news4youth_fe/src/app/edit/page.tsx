@@ -14,7 +14,7 @@ export default function MyPage() {
     name: "",
     email: "",
     joinDate: "",
-    bio: "",
+    bio: "안녕하세요!",
   });
   const [post, setPost] = useState<
     { id: number; title: string; createdAt: string }[]
@@ -27,7 +27,9 @@ export default function MyPage() {
       router.push("/signin");
     } else {
       axios
-        .post(`http://${env.BACKEND_URL}/userinfo`, { token: jwt })
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userinfo`, {
+          token: jwt,
+        })
         .then((res) => {
           if (res.status === 200) {
             setUser({
@@ -47,7 +49,7 @@ export default function MyPage() {
   const handleSave = () => {
     const jwt = localStorage.getItem("token");
     axios
-      .post(`http://${env.BACKEND_URL}/updateuserinfo`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/updateuserinfo`, {
         token: jwt,
         name: user.name,
         email: user.email,

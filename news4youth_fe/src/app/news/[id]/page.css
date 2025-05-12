@@ -62,3 +62,180 @@
   overflow-x: auto;
   font-family: "JetBrains Mono", monospace;
 }
+.news-wrapper {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.news-wrapper h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.news-wrapper p {
+  font-size: 14px;
+  color: #666;
+}
+.content {
+  margin-top: 10px;
+}
+/* 댓글 전체 컨테이너 */
+.comment {
+  background-color: #f5f9ff; /* 아주 연한 파란색 배경 */
+  border: 1px solid #d0d7de; /* 연한 테두리 */
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s;
+}
+
+/* 댓글 hover 시 살짝 강조 */
+.comment:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 작성자 이름 */
+.comment-author {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+/* 댓글 내용 */
+.comment-content {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #374151; /* 다크 그레이 */
+  margin-bottom: 8px;
+}
+
+/* 작성 날짜 */
+.comment-date {
+  font-size: 0.8rem;
+  color: #6b7280; /* 흐린 회색 */
+  text-align: right;
+}
+.comment-wrapper {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #111827;
+}
+
+.comment-wrapper h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.comment-wrapper .date {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.comment-wrapper .content {
+  margin-top: 1.5rem;
+}
+
+.comment-wrapper .content h2 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.25rem;
+}
+
+.comment-wrapper .content p {
+  margin: 0.75rem 0;
+  font-size: 1rem;
+}
+
+.comment-wrapper .content ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+}
+
+.comment-wrapper .content blockquote {
+  border-left: 4px solid #93c5fd;
+  padding-left: 1rem;
+  color: #374151;
+  background-color: #f3f4f6;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.comment-wrapper .content pre {
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* 추가로 기존에 중복되던 부분까지 정리 */
+.comment-wrapper {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.comment-wrapper h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.comment-textarea {
+  min-height: 120px;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  resize: vertical;
+  font-family: "Segoe UI", sans-serif;
+  color: #374151;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.comment-textarea:focus {
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  outline: none;
+}
+
+.comment-submit {
+  align-self: flex-end;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.comment-submit:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.comment-submit:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}

@@ -8,16 +8,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 import cors from 'cors';
 app.use(cors({
-  origin: 'http://172.16.1.225:3000',
-  credentials: true,
+  origin: '*', // 일단 개발 중이면 모두 허용
 }));
 import newsRouter from './routes/newsRouter';
 import myAcc from './routes/myAcc';
 import search from './routes/search';
 import { env } from "process";
+import comment from './routes/comment';
 app.use(newsRouter);
 app.use(myAcc);
 app.use(search);
+app.use(comment);
 
 const check = async (username: string, password: string) => {
     // Check if the user exists in the database
@@ -54,8 +55,8 @@ const isavailable = async (username: string) => {
     return true;
 }
 const secretKey: string = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-const createToken = (username: string) => {
-    const token = jwt.sign({ user_id: username }, secretKey);
+const createToken = (username: string, id: number) => {
+    const token = jwt.sign({ user_id: username, id:id }, secretKey);
     return token;
 }
 
@@ -99,7 +100,7 @@ app.post('/signup', async(req:any, res:any) => {
             email: email,
             name: username,
             password: password,
-            token: createToken(username),
+            token: "signuping",
         }
     }).then(async() => {
         // res.status(201).json({ message: '회원가입 성공' });
@@ -110,6 +111,14 @@ app.post('/signup', async(req:any, res:any) => {
             }
         });
         const token = data?.token || null;
+        await prisma.user.update({
+            where: {
+                id: data?.id
+            },
+            data: {
+                token: createToken(username, data?.id || 0)
+            }
+        });
         res.status(200).json({ message: '회원가입 성공', token: token});
     }).catch(error => {
         res.status(500).json({ message: 'Internal server error', error });

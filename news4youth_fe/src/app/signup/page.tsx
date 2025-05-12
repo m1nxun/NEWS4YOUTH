@@ -34,7 +34,7 @@ export default function signup() {
       return;
     }
     axios
-      .post(`http://${env.BACKEND_URL}/signup`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signup`, {
         username: formData.username,
         email: formData.email,
         password: formData.password,

@@ -13,6 +13,7 @@
     "@heroui/react": "^2.7.6",
     "@heroui/system": "^2.4.13",
     "@heroui/theme": "^2.4.13",
+    "@tiptap/cli": "^1.1.11",
     "@tiptap/extension-color": "^2.11.7",
     "@tiptap/extension-image": "^2.11.7",
     "@tiptap/react": "^2.11.7",

@@ -27,7 +27,9 @@ export default function MyPage() {
       router.push("/signin");
     }
     axios
-      .post(`http://${env.BACKEND_URL}/userinfo`, { token: jwt })
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/userinfo`, {
+        token: jwt,
+      })
       .then((res) => {
         if (res.status === 200) {
           setuser({

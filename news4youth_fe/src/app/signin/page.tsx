@@ -19,7 +19,7 @@ export default function sigin() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     axios
-      .post(`http://${env.BACKEND_URL}/signin`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signin`, {
         username: formData.username,
         password: formData.password,
       })

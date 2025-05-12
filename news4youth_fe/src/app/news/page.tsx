@@ -25,7 +25,7 @@ export default function NewsPage() {
 
     const timeout = setTimeout(() => {
       axios
-        .post(`http://${env.BACKEND_URL}/search`, { query })
+        .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/search`, { query })
         .then((res) => {
           if (res.status === 200 && Array.isArray(res.data.data)) {
             setArticles(res.data.data);

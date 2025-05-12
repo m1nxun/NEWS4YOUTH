@@ -3,10 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import TipTapEditorWithToolbar from "@/components/TipTapEditor";
-import { useCurrentEditor } from "@tiptap/react";
 import { toast } from "react-toastify";
-import { env } from "process";
-
 export default function NewNews() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -20,7 +17,7 @@ export default function NewNews() {
       return;
     }
     axios
-      .post(`http://${env.BACKEND_URL}/create/news`, {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/create/news`, {
         title,
         content,
         token: localStorage.getItem("token"),
@@ -34,7 +31,6 @@ export default function NewNews() {
             hideProgressBar: true,
             closeOnClick: true,
           });
-          console.log("test1");
           const ids = response.data.postId;
           router.push(`/news/${ids}`);
         } else {
