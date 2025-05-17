@@ -31,6 +31,7 @@ model Post{
   category String
   like Int @default(0)
   comment Comment[]
+  recommended Boolean @default(false)
 }
 
 model Comment{

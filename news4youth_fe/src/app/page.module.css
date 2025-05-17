@@ -4,6 +4,22 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  height: 100vh;
   text-align: center;
+}
+.recommendscroll {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px 18px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s;
+}
+.recommendscroll:hover {
+  background-color: #2563eb;
 }

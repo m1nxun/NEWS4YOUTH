@@ -3,12 +3,14 @@ import styles from "./Navbar.module.css";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 export default function Navbar() {
   // 메뉴 토글 상태 관리
   const [logined, setLogined] = useState(false);
   const [token, setToken] = useState("");
   const [username, setUsername] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [permission, setPermission] = useState("");
   const router = useRouter();
   const handleToggle = () => {
     setMenuOpen(!menuOpen);
@@ -20,12 +22,12 @@ export default function Navbar() {
     // localStorage에서 토큰 가져오는 함수
     const fetchToken = () => {
       const jwt = localStorage.getItem("token");
+      if (jwt == "signuping") return;
       if (jwt) setLogined(true);
       else setLogined(false);
       // 토큰이 있으면 상태 업데이트
       if (!jwt) return;
       setToken(jwt);
-      console.log("토큰", jwt, "  tk", token);
     };
 
     // 초기 실행
@@ -44,13 +46,25 @@ export default function Navbar() {
     if (token) {
       const decoded: any = jwtDecode(token);
       setUsername(decoded.user_id);
+      setPermission(decoded.permission);
     }
   }, [token]);
 
   return (
     <nav className={styles.navbar}>
       {/* 로고/브랜드 */}
-      <div className={styles.navBrand}>NEWS4YOUTH</div>
+      <Image
+        src="/N4Y_1L_AO.png"
+        width={"340"}
+        height={"35"}
+        alt="logo"
+        onClick={() => {
+          router.push("/");
+        }}
+        style={{
+          cursor: "pointer",
+        }}
+      />
 
       {/* 햄버거 버튼 */}
       <button
@@ -78,14 +92,27 @@ export default function Navbar() {
         <li className={styles.navItem}>
           {!logined ? (
             <a href="/signin" className={styles.navLink}>
-              관리자 로그인
+              로그인
             </a>
           ) : (
             <div className={styles.navLink}>
               <strong>{username}</strong>님 환영합니다
               <div className={styles.dropdown}>
+                <div>
+                  <strong>{permission == "admin" ? "기자" : "회원"}</strong>{" "}
+                  등급 입니다!
+                </div>
                 <a href="/mypage">마이페이지</a>
-                <a href="/news/create">글작성하기</a>
+                {permission == "admin" ? (
+                  <a href="/news/create">글작성하기</a>
+                ) : (
+                  ""
+                )}
+                {permission == "admin" ? (
+                  <a href="/newsrc">추천 뉴스 설정</a>
+                ) : (
+                  ""
+                )}
                 <a
                   href="/logout"
                   style={{

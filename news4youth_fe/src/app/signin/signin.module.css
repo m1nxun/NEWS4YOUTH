@@ -54,3 +54,8 @@
 .button:hover {
   background-color: #555;
 }
+.register {
+  text-align: center;
+  margin-top: 1rem;
+  color: #ccc;
+}

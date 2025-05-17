@@ -12,7 +12,7 @@ export default function signup() {
     email: "",
     password: "",
     confirm: "",
-    code: "",
+    code: "10103",
   });
 
   const handleChange = (e: any) => {
@@ -77,7 +77,7 @@ export default function signup() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>관리자 회원가입</h1>
+      <h1 className={styles.title}>회원가입</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
@@ -116,16 +116,6 @@ export default function signup() {
           name="confirm"
           placeholder="비밀번호 확인"
           value={formData.confirm}
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          className={styles.input}
-          type="password"
-          name="code"
-          placeholder="회원가입 코드"
-          value={formData.code}
           onChange={handleChange}
           required
         />

@@ -167,7 +167,7 @@ const TipTapEditorWithToolbar: React.FC<Props> = ({ content, onChange }) => {
       onUpdate={({ editor }) => {
         onChange(editor.getHTML());
       }}
-      slotBefore={<MenuBar />} // ✨ 이게 핵심
+      slotBefore={<MenuBar />}
     />
   );
 };

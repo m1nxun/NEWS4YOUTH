@@ -15,10 +15,14 @@ import myAcc from './routes/myAcc';
 import search from './routes/search';
 import { env } from "process";
 import comment from './routes/comment';
+import searchall from './routes/searchall';
+import recom from './routes/addRecomm';
+app.use(recom);
 app.use(newsRouter);
 app.use(myAcc);
 app.use(search);
 app.use(comment);
+app.use(searchall);
 
 const check = async (username: string, password: string) => {
     // Check if the user exists in the database
@@ -55,8 +59,8 @@ const isavailable = async (username: string) => {
     return true;
 }
 const secretKey: string = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-const createToken = (username: string, id: number) => {
-    const token = jwt.sign({ user_id: username, id:id }, secretKey);
+const createToken = (username: string, id: number, permission:string) => {
+    const token = jwt.sign({ user_id: username, id:id, permission:permission }, secretKey);
     return token;
 }
 
@@ -116,7 +120,7 @@ app.post('/signup', async(req:any, res:any) => {
                 id: data?.id
             },
             data: {
-                token: createToken(username, data?.id || 0)
+                token: createToken(username, data?.id || 0, "user")
             }
         });
         res.status(200).json({ message: '회원가입 성공', token: token});

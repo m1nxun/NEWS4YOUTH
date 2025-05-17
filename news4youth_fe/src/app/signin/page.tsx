@@ -49,7 +49,7 @@ export default function sigin() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>관리자 로그인</h1>
+      <h1 className={styles.title}>로그인</h1>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
@@ -74,6 +74,10 @@ export default function sigin() {
         <button type="submit" className={styles.button}>
           로그인
         </button>
+        <div className={styles.register}>
+          <p>계정이 없으신가요?</p>
+          <a href="/signup">회원가입</a>
+        </div>
       </form>
     </div>
   );
