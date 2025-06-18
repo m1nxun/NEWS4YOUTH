@@ -8,6 +8,7 @@ export default function NewNews() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [imgURL, setimgURL] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,6 +23,7 @@ export default function NewNews() {
         content,
         token: localStorage.getItem("token"),
         category,
+        imgURL,
       })
       .then((response) => {
         if (response.status === 201) {
@@ -71,7 +73,18 @@ export default function NewNews() {
       />
       <input
         type="text"
-        placeholder="키워드(카테고리)를 입력하세요"
+        placeholder="대표 이미지 URL을 입력하세요 (선택)"
+        value={imgURL}
+        onChange={(e) => setimgURL(e.target.value)}
+        style={{
+          width: "97.5%",
+          padding: "1rem",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          marginBottom: "1rem",
+        }}
+      />
+      <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         style={{
@@ -81,7 +94,15 @@ export default function NewNews() {
           border: "1px solid #ccc",
           marginBottom: "1rem",
         }}
-      />
+      >
+        <option value="역사">역사</option>
+        <option value="과학">과학</option>
+        <option value="스포츠">스포츠</option>
+        <option value="예술">예술</option>
+        <option value="교육">교육</option>
+        <option value="경제">경제</option>
+        <option value="IT">IT</option>
+      </select>
 
       <TipTapEditorWithToolbar onChange={setContent} content={content} />
       <button

@@ -17,12 +17,14 @@ import { env } from "process";
 import comment from './routes/comment';
 import searchall from './routes/searchall';
 import recom from './routes/addRecomm';
+import getArticles from "./routes/getArticles";
 app.use(recom);
 app.use(newsRouter);
 app.use(myAcc);
 app.use(search);
 app.use(comment);
 app.use(searchall);
+app.use(getArticles);
 
 const check = async (username: string, password: string) => {
     // Check if the user exists in the database
@@ -132,8 +134,8 @@ app.post('/signup', async(req:any, res:any) => {
 
 // news save
 app.post('/create/news', async(req:any, res:any) => {
-    const { title, content, token, category } = req.body;
-    if (!title || !content || !token || !category) {
+    const { title, content, token, category, imgURL } = req.body;
+    if (!title || !content || !token || !category || !imgURL) {
         return res.status(400).json({ message: '제목, 본문, 또는 로그인되어있지 않습니다' });
     }
     let data = await prisma.user.findFirst({
@@ -148,6 +150,7 @@ app.post('/create/news', async(req:any, res:any) => {
             content: content,
             authorId: data.id,
             category: category,
+            Image: imgURL
         }
     }).then((response) => {
       console.log(response);

@@ -32,6 +32,7 @@ model Post{
   like Int @default(0)
   comment Comment[]
   recommended Boolean @default(false)
+  Image String?
 }
 
 model Comment{

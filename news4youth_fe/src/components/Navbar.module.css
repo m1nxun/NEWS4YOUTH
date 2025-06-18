@@ -1,124 +1,180 @@
-/* styles/Navbar.module.css */
+/* Navbar.module.css - XD 디자인 기준 */
 
-/* 초기화, 선택 사항 */
+.header {
+  width: 100%;
+  background: #fff;
+}
 
-.navbar {
-  box-sizing: border-box;
+/* 상단 로그인/회원가입 영역 */
+.topBar {
+  font-size: 14px;
+  color: #666;
+  text-align: right;
+  padding: 6px 40px 0 0;
+  text-decoration: none;
+}
+.topInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-decoration: none;
+}
+.topInner > a {
+  color: #666;
+  text-decoration: none;
+  margin-right: 16px;
+}
+.authLinks a {
+  color: #666;
+  text-decoration: none;
+  margin: 0 4px;
+}
+.divider {
+  color: #ccc;
+  margin: 0 4px;
+}
+
+/* 하단 네비게이션 영역 */
+.bottomBar {
+  border-bottom: 2px solid #f5a623;
+  background: #ffffff;
+}
+.bottomInner {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 핵심 */
+  align-items: center;
+  height: 80px;
+  position: relative; /* 우측 아이템 배치 위해 필요 */
+}
+/* 로고 영역 */
+.logoArea {
+  cursor: pointer;
+  margin-right: 24px;
+  flex-shrink: 0;
+}
+.logoArea img {
+  display: block;
+  width: auto;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* 네비게이션 메뉴 */
+.nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1rem 1.5rem;
-  background: #dbdbdb;
-  z-index: 999;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  flex-grow: 1;
+}
+.navContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+}
+.menu li a {
+  text-decoration: none;
+  color: #000000;
 }
 
-.navBrand {
-  font-size: 1.5rem;
+/* 구분선 */
+.separator {
+  width: 1px;
+  height: 24px;
+  background: #ccc;
+  margin: 0 16px;
+}
+
+/* Plus 버튼 */
+.plusBtn {
+  display: flex;
+  align-items: center;
+  background-color: #f5a623;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  color: #fff;
   font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  gap: 6px;
 }
 
-/* 햄버거 버튼 (큰 화면에서 숨김) */
-.navToggle {
+/* 검색, 햄버거 영역 */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hamburger {
   display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+}
+.hamburger span {
+  height: 2px;
+  background-color: #333;
+  border-radius: 1px;
+}
+.searchBtn {
+  margin-top: 7px;
+  padding: 10px;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-/* 햄버거 버튼 안의 세 줄 */
-.toggleBar {
-  display: block;
-  width: 25px;
-  height: 2px;
-  margin: 5px 0;
-  background: #333;
-  transition: 0.3s;
-}
+/* 반응형 */
+@media (max-width: 768px) {
+  .menu,
+  .plusBtn {
+    display: none;
+  }
 
-/* 메뉴 - 큰 화면 */
-.navMenu {
-  display: flex;
-  list-style: none;
+  .hamburger {
+    display: flex;
+  }
 }
+/* ✅ 기존 코드 유지하면서 아래 스타일 추가 */
 
-.navItem + .navItem {
-  margin-left: 1.5rem;
-}
-
-.navLink {
-  text-decoration: none;
-  color: #222222;
-  font-weight: 500;
-  transition: opacity 0.1s ease-in-out;
+.userArea {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
-  padding: 0px 0px 10px 0px;
 }
+
 .dropdown {
-  display: none;
   position: absolute;
-  top: 56%;
-  right: 1.4%;
+  top: 18px;
+  right: 0;
   background-color: white;
-  min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  margin-top: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
   z-index: 100;
+  min-width: 120px;
+  border-radius: 4px;
 }
 
 .dropdown a {
   display: block;
-  padding: 12px 16px;
-  border-radius: 6px;
+  padding: 8px 16px;
+  color: #333;
   text-decoration: none;
-  color: black;
-  border-bottom: 1px solid #f0f0f0;
-}
-.dropdown div {
-  display: block;
-  padding: 12px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  color: black;
-  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
 }
 
-.navLink:hover .dropdown {
-  display: block;
-}
-
-/* 작은 화면에서 반응형 처리 */
-@media (max-width: 768px) {
-  .navToggle {
-    display: block;
-  }
-
-  .navMenu {
-    position: absolute;
-    top: 64px; /* Navbar 높이만큼 아래 */
-    right: 0;
-    width: 200px;
-    background: #f5f5f5;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
-    display: none; /* 초기 상태 숨김 */
-  }
-
-  .navItem {
-    margin: 0.5rem 0;
-  }
-
-  /* .show 클래스를 토글하여 메뉴 열고 닫기 */
-  .show {
-    display: flex;
-  }
+.dropdown a:hover {
+  background-color: #f5f5f5;
 }

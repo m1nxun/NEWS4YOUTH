@@ -1,131 +1,138 @@
 "use client";
+
 import styles from "./Navbar.module.css";
 import { jwtDecode } from "jwt-decode";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
+
+const categories = [
+  { name: "스포츠", href: "/sports" },
+  { name: "예술", href: "/arts" },
+  { name: "과학", href: "/science" },
+  { name: "역사", href: "/history" },
+  { name: "교육", href: "/education" },
+  { name: "경제", href: "/economy" },
+  { name: "IT", href: "/it" },
+];
+
 export default function Navbar() {
-  // 메뉴 토글 상태 관리
   const [logined, setLogined] = useState(false);
   const [token, setToken] = useState("");
   const [username, setUsername] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
   const [permission, setPermission] = useState("");
+  const [hovered, setHovered] = useState(false);
+
   const router = useRouter();
-  const handleToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
+
   useEffect(() => {
-    // 브라우저 환경인지 확인
-    if (typeof window === "undefined") return;
-
-    // localStorage에서 토큰 가져오는 함수
-    const fetchToken = () => {
-      const jwt = localStorage.getItem("token");
-      if (jwt == "signuping") return;
-      if (jwt) setLogined(true);
-      else setLogined(false);
-      // 토큰이 있으면 상태 업데이트
-      if (!jwt) return;
-      setToken(jwt);
+    const checkToken = () => {
+      const jwt =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token") || ""
+          : "";
+      if (jwt && jwt !== "signuping") {
+        setLogined(true);
+        setToken(jwt);
+      } else {
+        setLogined(false);
+        setToken("");
+      }
     };
 
-    // 초기 실행
-    fetchToken();
-    // 5초마다 토큰 확인
-    const intervalId = setInterval(fetchToken, 3000);
-
-    // 언마운트 시 interval 정리
-    return () => {
-      console.log("clear");
-      clearInterval(intervalId);
-    };
+    checkToken();
+    const intervalId = setInterval(checkToken, 3000);
+    return () => clearInterval(intervalId);
   }, []);
-  // 토큰이 있을 경우 decode
+
   useEffect(() => {
-    if (token) {
+    if (!token) return;
+    try {
       const decoded: any = jwtDecode(token);
       setUsername(decoded.user_id);
       setPermission(decoded.permission);
+    } catch {
+      setUsername("");
+      setPermission("");
     }
   }, [token]);
 
   return (
-    <nav className={styles.navbar}>
-      {/* 로고/브랜드 */}
-      <Image
-        src="/N4Y_1L_AO.png"
-        width={"340"}
-        height={"35"}
-        alt="logo"
-        onClick={() => {
-          router.push("/");
-        }}
-        style={{
-          cursor: "pointer",
-        }}
-      />
-
-      {/* 햄버거 버튼 */}
-      <button
-        className={styles.navToggle}
-        onClick={handleToggle}
-        aria-label="Toggle menu"
-      >
-        <span className={styles.toggleBar}></span>
-        <span className={styles.toggleBar}></span>
-        <span className={styles.toggleBar}></span>
-      </button>
-
-      {/* 실제 메뉴 리스트 */}
-      <ul className={`${styles.navMenu} ${menuOpen ? styles.show : ""}`}>
-        <li className={styles.navItem}>
-          <a href="/" className={styles.navLink}>
-            홈
-          </a>
-        </li>
-        <li className={styles.navItem}>
-          <a href="/news" className={styles.navLink}>
-            오량 소식
-          </a>
-        </li>
-        <li className={styles.navItem}>
-          {!logined ? (
-            <a href="/signin" className={styles.navLink}>
-              로그인
-            </a>
-          ) : (
-            <div className={styles.navLink}>
-              <strong>{username}</strong>님 환영합니다
-              <div className={styles.dropdown}>
-                <div>
-                  <strong>{permission == "admin" ? "기자" : "회원"}</strong>{" "}
-                  등급 입니다!
-                </div>
-                <a href="/mypage">마이페이지</a>
-                {permission == "admin" ? (
-                  <a href="/news/create">글작성하기</a>
-                ) : (
-                  ""
-                )}
-                {permission == "admin" ? (
-                  <a href="/newsrc">추천 뉴스 설정</a>
-                ) : (
-                  ""
-                )}
-                <a
-                  href="/logout"
-                  style={{
-                    color: "red",
-                  }}
-                >
-                  로그아웃
-                </a>
+    <header className={styles.header}>
+      <div className={styles.topBar}>
+        <div className={styles.topInner}>
+          {logined ? (
+            <div className={styles.userArea}>
+              <div
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+              >
+                <span>환영합니다, {username}님</span>
+                <span className={styles.divider}>|</span>
+                <Link href="/logout">로그아웃</Link>
               </div>
+              {hovered && (
+                <div
+                  className={styles.dropdown}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                >
+                  <Link href="/mypage">마이페이지</Link>
+                  <Link href="/news/create">글 작성하기</Link>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className={styles.authLinks}>
+              <Link href="/signin">로그인</Link>
+              <span className={styles.divider}>|</span>
+              <Link href="/signup">회원가입</Link>
             </div>
           )}
-        </li>
-      </ul>
-    </nav>
+        </div>
+      </div>
+
+      <div className={styles.bottomBar}>
+        <div className={styles.bottomInner}>
+          <div className={styles.navContainer}>
+            <div className={styles.logoArea} onClick={() => router.push("/")}>
+              <Image
+                src="/logo2.png"
+                width={190}
+                height={80}
+                alt="News4Youth"
+              />
+            </div>
+
+            <nav className={styles.nav}>
+              <ul className={styles.menu}>
+                {categories.map((cat) => (
+                  <li key={cat.name}>
+                    <Link href={`/news/${cat.href}`}>{cat.name}</Link>
+                  </li>
+                ))}
+              </ul>
+              <span className={styles.separator}></span>
+              <button className={styles.plusBtn}>
+                <span>NEWS4YOUTH Plus</span>
+              </button>
+            </nav>
+          </div>
+
+          <div className={styles.actions}>
+            <Link className={styles.searchBtn} aria-label="검색" href={"/news"}>
+              <Image
+                src="/search_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"
+                width={24}
+                height={24}
+                alt="검색"
+              />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

@@ -4,10 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 export const metadata: Metadata = {
   title: "News For Youth | 쉬운 언론",
   description: "News For Youth는 청소년을 위한 쉬운 언론입니다.",
-  icons: {
-    icon: "/Daeshin.png",
-    shortcut: "/Daeshin.png",
-  },
 };
 import "./globals.css";
 
