@@ -146,7 +146,6 @@
     display: flex;
   }
 }
-/* ✅ 기존 코드 유지하면서 아래 스타일 추가 */
 
 .userArea {
   position: relative;
