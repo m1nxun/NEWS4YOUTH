@@ -6,24 +6,33 @@ const nextConfig: NextConfig = {
     // domains:["picsum.photos", "google.com", "img.lovepik.com"],
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: "https",
         hostname: "picsum.photos",
-        port: '',
+        port: "",
       },
-          {
-        protocol: 'https',
+      {
+        protocol: "https",
         hostname: "google.com",
-        port: '',
+        port: "",
       },
-          {
-        protocol: 'https',
+      {
+        protocol: "https",
         hostname: "img.lovepik.com",
-        port: '',
-      }]
+        port: "",
+      },
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,
-  }
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: process.env.NEXT_BACKEND_HIDDEN_URL + "/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
