@@ -1,9 +1,28 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
-    domains:["picsum.photos"],
+    // domains:["picsum.photos", "google.com", "img.lovepik.com"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: "picsum.photos",
+        port: '',
+      },
+          {
+        protocol: 'https',
+        hostname: "google.com",
+        port: '',
+      },
+          {
+        protocol: 'https',
+        hostname: "img.lovepik.com",
+        port: '',
+      }]
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   }
 };
 

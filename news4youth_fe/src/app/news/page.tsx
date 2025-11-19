@@ -52,7 +52,7 @@ export default function NewsPage() {
   return (
     <div className="spotlight-wrapper">
       <form
-        style={{ width: "100%", maxWidth: "600px" }}
+        style={{ width: "100%", maxWidth: "860px" }}
         onSubmit={(e) => e.preventDefault()}
       >
         <input
@@ -66,23 +66,31 @@ export default function NewsPage() {
 
       <div className="news-content">
         {articles.length > 0 ? (
-          articles.slice(0, 5).map((article) => (
+          articles.map((article) => (
             <Link
               key={article.id}
               href={`/news/${article.id}`}
               className="news-card"
             >
-              <div className="titlecontainer">
-                <strong className="news-title">{article.title}</strong>
-                <span className="news-category">{article.category}</span>
+              <div className="news-card-header">
+                <span className="news-chip">{article.category}</span>
+                <span className="news-date">
+                  {new Date(article.createdAt).toLocaleDateString()}
+                </span>
               </div>
+              <h3 className="news-card-title">{article.title}</h3>
               <p className="news-preview">
-                {stripHtmlAndTruncate(article.content, 20)}
+                {stripHtmlAndTruncate(article.content, 110)}
               </p>
+              <span className="news-arrow">자세히 보기 →</span>
             </Link>
           ))
         ) : (
-          <p className="no-result">검색 결과가 없습니다.</p>
+          <p className="no-result">
+            {query.length > 0
+              ? "검색 결과가 없습니다."
+              : "검색어를 입력해 기사를 찾아보세요."}
+          </p>
         )}
       </div>
     </div>

@@ -29,6 +29,8 @@ export default function NewsDetailPage({
   const [news, setNews] = useState<any>(null);
   const [comments, setComments] = useState<comment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [commentContent, setCommentContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,9 +84,7 @@ export default function NewsDetailPage({
     <>
       <div className="news-wrapper">
         <h1>{news.title}</h1>
-        <p className="date">
-          작성일: {new Date(news.createdAt).toLocaleString()}
-        </p>
+        <p className="date">{new Date(news.createdAt).toLocaleString()}</p>
         <div
           className="content"
           dangerouslySetInnerHTML={{ __html: news.content }}
@@ -92,18 +92,18 @@ export default function NewsDetailPage({
       </div>
 
       <div className="comment-wrapper">
-        <h2>댓글 작성하기</h2>
+        <h2>댓글</h2>
         <form
           className="comment-form"
           onSubmit={async (e) => {
             const form = e.currentTarget;
             e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            const content = formData.get("content");
+            const content = commentContent.trim();
             if (!content) {
               return;
             }
             try {
+              setIsSubmitting(true);
               const token = localStorage.getItem("token");
               if (!token) {
                 throw new Error("토큰이 없습니다.");
@@ -121,25 +121,50 @@ export default function NewsDetailPage({
               if (response.status === 200) {
                 toast.success("댓글이 작성되었습니다.");
               }
-              form.reset();
+              setCommentContent("");
             } catch (error) {
               console.error("댓글 작성 실패:", error);
+            } finally {
+              setIsSubmitting(false);
             }
             hardReload();
           }}
         >
-          <textarea
-            name="content"
-            className="comment-textarea"
-            placeholder="댓글을 입력하세요..."
-            required
-          />
-          <button type="submit" className="comment-submit">
-            댓글 작성
-          </button>
+          <div className="comment-input-row">
+            <div className="avatar avatar-sm" aria-hidden>
+              {(typeof window !== "undefined" &&
+                localStorage.getItem("userName")?.[0]) ||
+                "익"}
+            </div>
+            <textarea
+              name="content"
+              className="comment-textarea"
+              placeholder="공개 댓글 추가..."
+              value={commentContent}
+              onChange={(e) => setCommentContent(e.target.value)}
+              required
+            />
+          </div>
+          <div className="comment-form-actions">
+            <button
+              type="button"
+              className="comment-cancel"
+              onClick={() => setCommentContent("")}
+              disabled={isSubmitting}
+            >
+              취소
+            </button>
+            <button
+              type="submit"
+              className="comment-submit"
+              disabled={commentContent.trim().length === 0 || isSubmitting}
+            >
+              등록
+            </button>
+          </div>
         </form>
 
-        <h2>댓글 목록</h2>
+        <h2>전체 댓글</h2>
         {comments.length > 0 ? (
           [...comments]
             .sort(
@@ -149,11 +174,36 @@ export default function NewsDetailPage({
             )
             .map((comment) => (
               <div key={comment.id} className="comment">
-                <p className="comment-author">{comment.author.name}</p>
-                <p className="comment-content">{comment.content}</p>
-                <p className="comment-date">
-                  {new Date(comment.createdAt).toLocaleString()}
-                </p>
+                <div className="comment-header">
+                  <div className="avatar" aria-hidden>
+                    {comment.author?.name?.[0] || "익"}
+                  </div>
+                  <div className="comment-meta">
+                    <span className="comment-author">
+                      {comment.author.name}
+                    </span>
+                    <span className="comment-dot">·</span>
+                    <span className="comment-date">
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="comment-actions">
+                    <button className="action-btn" type="button">
+                      신고
+                    </button>
+                  </div>
+                </div>
+                <div className="comment-body">
+                  <p className="comment-content">{comment.content}</p>
+                </div>
+                <div className="comment-footer">
+                  <button className="chip-btn" type="button">
+                    좋아요
+                  </button>
+                  <button className="chip-btn" type="button">
+                    답글
+                  </button>
+                </div>
               </div>
             ))
         ) : (

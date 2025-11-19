@@ -54,7 +54,12 @@ export default function PoliticsPage() {
           <h3>최신기사</h3>
           {HistoryData.map((item, idx) => (
             <article key={idx} className={styles.newsItem}>
-              <Image src="/Daeshin.png" width={160} height={100} alt="thumb" />
+              <Image
+                src={item.Image || "Daeshin.png"}
+                width={160}
+                height={100}
+                alt="thumb"
+              />
               <Link href={`/news/${item.id}`}>
                 <h4>{item.title}</h4>
                 <p>{stripHtmlTags(item.content.slice(0, 80))}</p>
